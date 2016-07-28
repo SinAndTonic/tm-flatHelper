@@ -26,7 +26,7 @@ Meteor.methods({
 
 
     var theTest = HTTP.get('https://api.tmsandbox.co.nz/v1/' + urlEnd,options);
-
+    Listings.remove({owner: Meteor.user()._id});
     for (var key in theTest.data.List){
       theTest.data.List[key].owner = Meteor.user()._id;
 			Listings.insert(theTest.data.List[key]);
