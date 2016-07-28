@@ -1,0 +1,29 @@
+<head>
+  <title>simple</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  {{> hello}}
+  {{> info}}
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="info">
+  {{> login}}
+</template>
+
+<template name="login">
+    {{#if currentUser}}
+        Hi, {{currentUser.services.trademe.name}}
+        <button id="logout">Logout</button>
+        <button id="fetchWatchlist">Fetch Watchlist</button>
+    {{else}}
+        <button id="trademe-login" class="btn btn-default"> Login with TradeMe</button>
+    {{/if}}
+</template>
