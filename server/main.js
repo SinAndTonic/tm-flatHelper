@@ -4,6 +4,10 @@ Meteor.startup(() => {
   // code to run on server at startup
 });
 
+Meteor.publish("listings", function () {
+    return Listings.find({owner: this.userId });
+  });
+
 Meteor.methods({
   fetchWatchlist: function (callType) {
 
@@ -24,12 +28,10 @@ Meteor.methods({
     var theTest = HTTP.get('https://api.tmsandbox.co.nz/v1/' + urlEnd,options);
 
     for (var key in theTest.data.List){
-		if (!Listings.findOne({ListingId : theTest.data.List[key].ListingId}))
+      theTest.data.List[key].owner = Meteor.user()._id;
 			Listings.insert(theTest.data.List[key]);
-
-    }
-
-    return theTest;
   }
+  return theTest;
+}
 
 });
