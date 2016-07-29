@@ -11,12 +11,15 @@ Meteor.publish("listings", function () {
 Meteor.methods({
   fetchWatchlist: function (callType) {
 
+        var tradeMeConf = ServiceConfiguration.configurations.find({service: 'trademe'}).fetch()[0];
   			var theParams = {category: 2975};
 				var	urlEnd = 'MyTradeMe/Watchlist/All.json';
-
+        var conKey = tradeMeConf.consumerKey;
+        var token = Meteor.user().services.trademe.accessToken;
+        var signature = tradeMeConf.secret + '&' + Meteor.user().services.trademe.accessTokenSecret;
 		options = {
 			headers : {
-				Authorization: 'OAuth oauth_consumer_key=F75C21EEA48E00A600EC65660121DE52, oauth_token=5ADB54E96F44D8B059E766C76BC8975A, oauth_signature_method=PLAINTEXT, oauth_signature=3A5F583AB5C366C7DB27378AF5C68B78&8B9C8D4B7A64C5B00D036CF8EB137D3F'
+				Authorization: 'OAuth oauth_consumer_key=' + conKey + ', oauth_token=' + token + ', oauth_signature_method=PLAINTEXT, oauth_signature=' + signature
 
 			},
 			params: theParams
